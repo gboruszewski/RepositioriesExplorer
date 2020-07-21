@@ -1,6 +1,10 @@
 
 .cardHeader {
   cursor: pointer;
+  span {
+    float: right;
+    margin-top: 0.75rem;
+  }
 }
 
 .isFetching {

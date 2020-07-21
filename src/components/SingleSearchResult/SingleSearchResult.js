@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import RepositoryDetails from "../RepositoryDetails/RepositoryDetails";
 import AppSpinner from "../AppSpinner/AppSpinner";
+import ResultStatus from "../ResultStatus/ResultStatus";
 import style from "./SingleSearchResult.module.scss";
 
 export default class SingleSearchResult extends Component {
@@ -65,6 +66,7 @@ export default class SingleSearchResult extends Component {
       <Card>
         <Card.Header className={style.cardHeader} onClick={this.toggleIsOpen}>
           {name}
+          <ResultStatus isOpen={isOpen} />
         </Card.Header>
         {isOpen && <Card.Body className={isFetching ? style.isFetching : ""}>
           {isFetching ? <AppSpinner /> : content?.map( (detail,index) => <RepositoryDetails key={index} details={detail} /> )}

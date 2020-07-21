@@ -1,0 +1,16 @@
+
+$border-weight: 2px;
+span {
+  border-style: solid;
+  border-color: black;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  transform: rotate(135deg);
+  &.isOpen {
+    border-width: $border-weight $border-weight 0 0;
+  }
+  &.isClosed {
+    border-width: 0 0 $border-weight $border-weight;
+  }
+}
