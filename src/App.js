@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
+import SearchResults from "./components/SearchResults/SearchResults";
 import './App.scss';
 
 const REPO_URL = "https://api.github.com/search/users";
@@ -11,9 +12,11 @@ export default class App extends Component {
     super(props);
     this.state = {
       search: "",
+      results: [],
     }
     this.updateSearch = this.updateSearch.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.setResults = this.setResults.bind(this);
   }
   timeoutId = "";
 
@@ -21,7 +24,21 @@ export default class App extends Component {
     const url = `${REPO_URL}?q=${this.state.search}`
     fetch(url)
     .then(data => data.json())
-    .then(data => console.log(data));
+    .then(data => this.setResults(data.items));
+  }
+
+  setResults(data) {
+    const results = this.parseResults(data);
+    this.setState({
+      results,
+    })
+  }
+
+  parseResults(data) {
+    return data.map( item => ({
+      name: item.login,
+      url: item.repos_url,
+    }))
   }
 
   manageSearchTimeout() {
@@ -38,9 +55,12 @@ export default class App extends Component {
   }
 
   render() {
-    const { state: { search}, updateSearch } = this;
+    const { state: { search, results }, updateSearch } = this;
     return (
-      <SearchBar value={search} onChange={updateSearch} />
+      <>
+        <SearchBar value={search} onChange={updateSearch} />
+        <SearchResults results={results} />
+      </>
     )
   }
 }
