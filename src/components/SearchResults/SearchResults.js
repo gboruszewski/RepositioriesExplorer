@@ -1,13 +1,13 @@
 import React from "react";
 import SingleSearchResult from "../SingleSearchResult/SingleSearchResult";
-import { Spinner } from "react-bootstrap";
+import AppSpinner from "../AppSpinner/AppSpinner";
 import style from "./SearchResults.module.scss";
 
 export default function SearchResults({results,searchKey,isSearching,showLabel}) {
   return (
     <div className={style.searchWrapper}>
       {
-        isSearching ? <div className={style.spinner}><Spinner animation="border" /></div>
+        isSearching ? <AppSpinner />
         :
         <>
           {showLabel && <h4 className={style.searchLabel}>

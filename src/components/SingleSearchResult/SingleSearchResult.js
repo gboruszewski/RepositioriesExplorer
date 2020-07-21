@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import RepositoryDetails from "../RepositoryDetails/RepositoryDetails";
+import AppSpinner from "../AppSpinner/AppSpinner";
 import style from "./SingleSearchResult.module.scss";
 
 export default class SingleSearchResult extends Component {
@@ -10,6 +11,7 @@ export default class SingleSearchResult extends Component {
       isOpen: false,
       content: [],
       contentRequested: false,
+      isFetching: false,
     }
     this.toggleIsOpen = this.toggleIsOpen.bind(this);
     this.requestContent = this.requestContent.bind(this);
@@ -20,11 +22,15 @@ export default class SingleSearchResult extends Component {
   requestContent() {
     this.setState({
       contentRequested: true,
+      isFetching: true,
     })
     fetch(this.props.result.url)
     .then(data => data.json())
     .then(data => this.updateContent(data))
-    .catch(error => console.warn(`Error for ${this.props.result.name}:`, error));
+    .catch(error => console.warn(`Error for ${this.props.result.name}:`, error))
+    .finally( () => this.setState({
+      isFetching: false,
+    }))
   }
 
   updateContent(data) {
@@ -54,14 +60,14 @@ export default class SingleSearchResult extends Component {
 
   render() {
     const { result: { name} } = this.props;
-    const { isOpen, content } = this.state;
+    const { isOpen, content, isFetching } = this.state;
     return (
       <Card>
         <Card.Header className={style.cardHeader} onClick={this.toggleIsOpen}>
           {name}
         </Card.Header>
-        {isOpen && <Card.Body>
-          {content?.map( (detail,index) => <RepositoryDetails key={index} details={detail} /> )}
+        {isOpen && <Card.Body className={isFetching ? style.isFetching : ""}>
+          {isFetching ? <AppSpinner /> : content?.map( (detail,index) => <RepositoryDetails key={index} details={detail} /> )}
         </Card.Body> }
       </Card>
     )
