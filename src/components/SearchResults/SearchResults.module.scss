@@ -1,0 +1,14 @@
+
+.searchWrapper {
+  position: relative;
+  .spinner {
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 2rem;
+    transform: translateX(-50%);
+  }
+  .searchLabel {
+    margin: 1rem 0;
+    font-size: 1rem;
+  }
+}

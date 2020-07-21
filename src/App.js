@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { Button } from "react-bootstrap";
-import './App.scss';
-
-const REPO_URL = "https://api.github.com/search/users";
-const TIMEOUT_IN_MILISEC = 1000;
-const SHOW_SEARCH_BUTTON = true;
+import { REPO_URL, TIMEOUT_IN_MILISEC, SHOW_SEARCH_BUTTON } from "./const/constants";
+import style from './App.module.scss';
 
 export default class App extends Component {
 
@@ -104,7 +101,7 @@ export default class App extends Component {
   }
 
   renderSearchButton() {
-    return <Button onClick={this.onSearchButtonClick}>Search</Button>
+    return <Button onClick={this.onSearchButtonClick} block>Search</Button>
   }
 
   render() {
@@ -112,11 +109,11 @@ export default class App extends Component {
     const shouldShowLabel = !SHOW_SEARCH_BUTTON || searchFinished;
     const searchWord = SHOW_SEARCH_BUTTON ? searchSaved : search;
     return (
-      <>
+      <div className={style.wrapper}>
         <SearchBar value={search} onChange={onSearchChange} />
         {SHOW_SEARCH_BUTTON && renderSearchButton()}
         <SearchResults searchKey={searchWord} results={results} isSearching={isSearching} showLabel={shouldShowLabel} />
-      </>
+      </div>
     )
   }
 }

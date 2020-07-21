@@ -1,11 +1,19 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import style from "./SearchBar.module.scss";
 
 export default function SearchBar({value, placeholder, onChange}) {
 
   return (
-    <Form>
-      <Form.Control type="text" placeholder={placeholder} value={value} onChange={(ev) => onChange(ev.target.value)} />
-    </Form>
+    <Button
+      className={style.searchBar}
+      as="input"
+      type="text"
+      variant="light"
+      placeholder={placeholder}
+      value={value}
+      onChange={(ev) => onChange(ev.target.value)}
+      block
+    />
   )
 }

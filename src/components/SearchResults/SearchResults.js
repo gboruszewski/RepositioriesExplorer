@@ -1,16 +1,19 @@
 import React from "react";
+import SingleSearchResult from "../SingleSearchResult/SingleSearchResult";
+import { Spinner } from "react-bootstrap";
+import style from "./SearchResults.module.scss";
 
 export default function SearchResults({results,searchKey,isSearching,showLabel}) {
   return (
-    <div>
+    <div className={style.searchWrapper}>
       {
-        isSearching ? "Searching..."
+        isSearching ? <div className={style.spinner}><Spinner animation="border" /></div>
         :
         <>
-          {showLabel && <h4>
-            {searchKey && results.length ? `Showing users for ${searchKey}` : ( searchKey ? 'No results found' : 'No search key provided' )}
+          {showLabel && <h4 className={style.searchLabel}>
+            {searchKey && results.length ? `Showing users for "${searchKey}"` : ( searchKey ? 'No results found' : 'No search key provided' )}
           </h4>}
-          {results.map( (result,index) => <li key={index}>{result.name}</li>)}
+          {results.map( (result,index) => <SingleSearchResult key={index} result={result} />)}
         </>
     }
     </div>
