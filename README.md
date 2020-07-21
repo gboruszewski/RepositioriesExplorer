@@ -3,6 +3,10 @@
 
 ... to install all dependencies
 
+## edit `src/const/constants`
+
+... to edit gitLab repository url (if needed) or change the way the search works (handled by clicking on button if SHOW_SEARCH_BUTTON set to true, otherwise handled by debounced value change)
+
 ### `npm start`
 
 Runs the app in the development mode.<br />
