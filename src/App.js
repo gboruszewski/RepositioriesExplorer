@@ -3,16 +3,17 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { Button } from "react-bootstrap";
 import { REPO_URL, TIMEOUT_IN_MILISEC, SHOW_SEARCH_BUTTON } from "./const/constants";
+import { setUsers } from "./reducers/main";
+import { connect } from "react-redux";
 import style from './App.module.scss';
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props){
     super(props);
     this.state = {
       search: "",
       searchSaved: "",
-      results: [],
       isSearching: false,
       searchFinished: false,
     }
@@ -52,18 +53,14 @@ export default class App extends Component {
       .catch( error => console.warn(error))
       .finally( () => this.finishSearch());
     } else {
-      this.setState({
-        results:[],
-      });
+      this.setResults([]);
       this.finishSearch();
     }
   }
 
   setResults(data) {
     const results = this.parseResults(data);
-    this.setState({
-      results,
-    })
+    this.props.setUsers(results);
   }
 
   parseResults(data) {
@@ -105,15 +102,17 @@ export default class App extends Component {
   }
 
   render() {
-    const { state: { search, searchSaved, results, isSearching, searchFinished }, onSearchChange, renderSearchButton } = this;
+    const { state: { search, searchSaved, isSearching, searchFinished }, onSearchChange, renderSearchButton } = this;
     const shouldShowLabel = !SHOW_SEARCH_BUTTON || searchFinished;
     const searchWord = SHOW_SEARCH_BUTTON ? searchSaved : search;
     return (
       <div className={style.wrapper}>
         <SearchBar value={search} onChange={onSearchChange} />
         {SHOW_SEARCH_BUTTON && renderSearchButton()}
-        <SearchResults searchKey={searchWord} results={results} isSearching={isSearching} showLabel={shouldShowLabel} />
+        <SearchResults searchKey={searchWord} isSearching={isSearching} showLabel={shouldShowLabel} />
       </div>
     )
   }
 }
+
+export default connect(()=>({}),{setUsers})(App);

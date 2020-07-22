@@ -1,9 +1,10 @@
 import React from "react";
 import SingleSearchResult from "../SingleSearchResult/SingleSearchResult";
 import AppSpinner from "../AppSpinner/AppSpinner";
+import { connect } from "react-redux";
 import style from "./SearchResults.module.scss";
 
-export default function SearchResults({results,searchKey,isSearching,showLabel}) {
+function SearchResults({searchKey,isSearching,showLabel,results}) {
   return (
     <div className={style.searchWrapper}>
       {
@@ -19,3 +20,11 @@ export default function SearchResults({results,searchKey,isSearching,showLabel})
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    results: state.users,
+  }
+}
+
+export default connect(mapStateToProps,{})(SearchResults);

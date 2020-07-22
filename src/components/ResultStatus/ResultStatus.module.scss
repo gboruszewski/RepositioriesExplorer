@@ -7,10 +7,10 @@ span {
   width: 0.5rem;
   height: 0.5rem;
   transform: rotate(135deg);
-  &.isOpen {
+  &.isClosed {
     border-width: $border-weight $border-weight 0 0;
   }
-  &.isClosed {
+  &.isOpen {
     border-width: 0 0 $border-weight $border-weight;
   }
 }
